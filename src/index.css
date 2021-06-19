@@ -1,0 +1,424 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/********************************************************/
+/*----------------------- Login ------------------------*/
+/********************************************************/
+
+.fondo-login {
+  background-color: #212529 !important;
+  /* border-radius: 20px; */
+}
+
+
+/********************************************************/
+/*----------------------- Header -----------------------*/
+/********************************************************/
+.cabecera {
+  background-color:#26272b;
+}
+
+.cabecera-btn {
+  background-color:transparent !important;
+  border-color:transparent !important;
+  color: #26272b !important;
+}
+
+.cabecera-btn:focus{
+  background-color:transparent !important;
+  border-color:transparent !important;
+  box-shadow: none !important;
+}
+
+.cabecera-btn:hover {
+  background-color:transparent !important;
+  border-color:transparent !important;
+}
+
+.cabeceraBack-btn {
+  background-color: #26272b !important;
+  border-color: #26272b !important;
+  color: white !important;
+}
+
+.cabeceraBack-btn:focus{
+  background-color: #26272b !important;
+  border-color: #26272b !important;
+  box-shadow: none !important;
+}
+
+.cabeceraBack-btn:hover {
+  background-color: #26272b !important;
+  border-color: #26272b !important;
+}
+
+.item-nav {
+  font-size: 15px !important;
+}
+
+.p-1rem {
+  padding: .25rem 1rem !important;
+}
+
+/********************************************************/
+/*-------------------- Menu lateral --------------------*/
+/********************************************************/
+#sidebar-wrapper {
+  min-height: 100vh;
+}
+
+.item-menu {
+  font-size: 13px;
+  padding: .75rem 1.25rem !important;
+}
+
+.my-account {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  border-width: 0 0 0px !important;
+}
+
+.btn-collapse {
+  border: 0px solid !important;
+}
+
+.btn-config {
+  border: 0px solid !important;
+  background-color: #f8f9fa!important;
+}
+
+/********************************************************/
+/*----------------------- Footer -----------------------*/
+/********************************************************/
+.footer-color {
+  background-color:#26272b;
+  padding: 15px;
+  font-size: 15px;
+  line-height: 24px;
+  color: #737373;
+}
+
+.footer-size-img {
+  width: 3em;
+}
+
+.footer-icon-size {
+  font-size: 25px;
+}
+
+/********************************************************/
+/*----------------------- Published -----------------------*/
+/********************************************************/
+
+.color-star {
+  color: #fdd835;
+}
+
+.color-stop {
+  color: #d32f2f !important;
+}
+
+.color-stop:focus {
+  box-shadow: 0 0 0 0 !important;
+}
+
+.color-stop:hover {
+  color: #9a0007 !important;
+}
+
+.color-play {
+  color: #00897b !important;
+}
+
+.color-play:focus {
+  box-shadow: 0 0 0 0 !important;
+}
+
+.color-play:hover {
+  color: #005b4f !important;
+}
+
+.padding-cero {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+
+.ico-whapp {
+  font-size: 24px;
+  margin-left: 3px;
+}
+
+.card-height {
+  height: 220px !important;
+}
+
+
+/********************************************************/
+/*---------------------- Favorites ---------------------*/
+/********************************************************/
+
+.link-guardar {
+  text-decoration: none !important;
+  padding: 0rem !important;
+}
+
+.link-guardar:focus {
+  box-shadow: 0 0 0 0 !important;
+}
+
+.guardar {
+  color: #c62828 !important;
+}
+
+
+/********************************************************/
+/*------------------ Estilos generales -----------------*/
+/********************************************************/
+
+/*----------------- Tamaño y tipografias ---------------*/
+.rr22 {
+  font-family: 'Roboto', sans-serif;
+  font-size: 22px;
+  color: #4a4a4a;
+}
+
+.rr16 {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  color: #4a4a4a;
+}
+
+.rr16-cyan {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  font-weight: 550;
+  color: #0097a7 !important;
+}
+
+.rr14 {
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  color: #4a4a4a;
+}
+
+/*----------------- Botones ---------------*/
+
+.btn-office4u {
+  background-color: #0097a7 !important;
+  border-color: #0097a7 !important;
+  color: white !important;
+}
+
+.btn-office4u:focus{
+  background-color: #006978 !important;
+  border-color: #006978 !important;
+}
+
+.btn-office4u:hover {
+  background-color: #006978 !important;
+  border-color: #006978 !important;
+}
+
+.btn-office4u-outline {
+  background-color: white !important;
+  border-color: #006978 !important;
+  color: #006978 !important;
+}
+
+.btn-office4u-outline:hover {
+  background-color: #006978 !important;
+  border-color: #006978 !important;
+  color: white !important;
+}
+
+.btn-office4u-outline:focus {
+  box-shadow: 0 0 0 0.2rem rgb(79 179 191 / 67%) !important;
+}
+
+/*----------------- Botones ---------------*/
+
+.img-rooms {
+  width: 100px;
+  height: 100px;
+  max-width: 105px;
+}
+
+.sombra {
+  transition: box-shadow 0.7s;
+}
+
+.sombra:hover {
+  box-shadow: 0 0 1px 1px rgb(0 0 0 / 2%), 15px 15px 15px 0 rgb(0 0 0 / 10%);
+}
+
+.size-ico-19 {
+  font-size: 19px !important;
+}
+
+.size-ico-120 {
+  font-size: 120px !important;
+}
+
+.img-uploadFile {
+  height: 126px !important;
+}
+
+.img-watermark {
+  opacity: 0.1;
+}
+
+.ico-success {
+  font-size: 120px;
+  color:#148F77;
+}
+
+.ico-error {
+  font-size: 120px;
+  color:#00838f;
+}
+
+.card-succes-form {
+  border-color: #006978 !important;    
+}
+
+.btn-new-office {
+  color:#006978 !important;
+  font-size: 12.8px !important;
+  font-weight: 500 !important;
+  vertical-align: baseline !important;
+  padding: 0 0 !important;
+}
+
+.btn-terms-and-conditions {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  color: #0097a7 !important;
+  font-weight: 500 !important;
+  vertical-align: baseline !important;
+  padding: .200rem .200rem !important;
+}
+
+
+
+
+.altura-minima {
+  min-height: 100vh !important; 
+}
+
+
+
+
+
+
+
+
+.title-Cateogrias{
+  text-align: left;
+  font-size: 30px;
+  font-weight: 600;
+}
+.description-Cateogrias{
+  text-align: left;
+  font-weight: 600;
+  margin-bottom: 39px;
+}
+.categorias-box{
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+.buscador-box{
+  margin-top: 50px;
+  margin-bottom: 20px;
+}
+.buscador-text{
+  text-align: left;
+  font-size: 45px;
+  font-weight: 600;
+}
+.buscador-description{
+  text-align: left;
+  font-weight: 800;
+  margin-bottom: 39px;
+}
+.buscador-button{
+  margin-top: 20px;
+}
+
+.vl {
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+  height: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+.ico-published {
+  font-size: 120px;
+  color:#00838f;
+}
+
+.text-justify {
+  text-align: justify;
+}
+
+
+
+
+
+
+
+.text-075 {
+  font-size: .75em !important;
+}
+
+.color-services {
+  background-color: #f7f7f7 !important;
+}
+
+.height-services {
+  height: 6rem !important;
+}
+
+.height-490 {
+  height: 490px !important;
+}
+
+.map-container {
+  height: 400px;
+}
+
+.color-calendar {
+  background-color: #1a1e21 !important;
+}
+
+
+/* #customFile::before {
+  content: "Elegir";
+  position: absolute;
+  z-index: 2;
+  display: block;
+  background-color: #eee;
+  
+} */
