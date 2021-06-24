@@ -393,6 +393,10 @@ code {
   font-size: .75em !important;
 }
 
+.text-2 {
+  font-size: 2em !important;
+}
+
 .color-services {
   background-color: #f7f7f7 !important;
 }

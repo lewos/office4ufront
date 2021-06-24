@@ -3,37 +3,41 @@ import React, { Component } from 'react';
 //import Office1 from '../../../assets/img/office1.jpg'
 
 // Importo llamada a endpoint
-import {DeleteFavourite as DeleteFavouriteAPI} from "../../../../controller/FavoritesController";
+//import {DeleteFavourite as DeleteFavouriteAPI} from "../../../../controller/FavoritesController";
 
 class Office extends Component {
     constructor(props) {
         super(props);
         this.state = {
             loading: false,
-            office: this.props.favorite,
-            img: this.props.favorite.imagenes[Math.floor(Math.random()*this.props.favorite.imagenes.length)],
-            cantServices: this.props.favorite.servicios.length - 4,
+            office: this.props.booking,
+            img: this.props.booking.imagenes[Math.floor(Math.random()*this.props.booking.imagenes.length)],
+            cantServices: this.props.booking.servicios.length - 4,
         };
     }
 
-    deleteFavorites = async () => {
-        // Ejecuto el endopoint para borrar el favorito seleccionado.
-        let favourite_id = this.props.favorite.favorito
+    // deleteFavorites = async () => {
+    //     // Ejecuto el endopoint para borrar el favorito seleccionado.
+    //     let favourite_id = this.props.favorite.favorito
 
-        this.setState({loading: true});
+    //     this.setState({loading: true});
 
-        let deleteFavouriteAPI = await DeleteFavouriteAPI(favourite_id);
+    //     let deleteFavouriteAPI = await DeleteFavouriteAPI(favourite_id);
 
-        this.setState({loading: false});
+    //     this.setState({loading: false});
 
-        if(deleteFavouriteAPI.rdo === 0) {
-            window.location.reload(false);
-        } 
-    }
+    //     if(deleteFavouriteAPI.rdo === 0) {
+    //         window.location.reload(false);
+    //     } 
+    // }
 
     render() {
         const office = this.state.office;
         //console.log(office)
+        const dbDateSince = new Date(office.calendario_alquileres[0].desde);
+        const dbDateUntil = new Date(office.calendario_alquileres[0].desde);
+        let booked_from = new Intl.DateTimeFormat('en-GB').format(dbDateSince);
+        let booked_until = new Intl.DateTimeFormat('en-GB').format(dbDateUntil);
         if(this.state.loading){
             return (
                 <div className="card mt-4 card-height align-items-center justify-content-center" >
@@ -65,8 +69,8 @@ class Office extends Component {
                             <div className="card-body">
                                 <div className="container">
                                     <div className="row">
-                                        <div className="col-sm-12 col-md-8 col-lg-8">
-                                            <h4 className="card-title align-middle">{office.ubicación.direccion.calle} {office.ubicación.direccion.numero} <i className="material-icons ms-2 text-muted">edit</i></h4>
+                                        <div className="col col-8">
+                                            <h4 className="card-title align-middle">{office.ubicación.direccion.calle} {office.ubicación.direccion.numero} </h4>
                                             {/* <h4 className="card-title align-middle"> Av. Corrientes 2081</h4> */}
 
                                             { office.categoria==="#?planta_completa" ? ( <p className="card-subtitle mb-2 text-muted">Oficina de planta completa / 1 a +50</p> ) : null }
@@ -77,36 +81,28 @@ class Office extends Component {
                                             <p className="card-subtitle mb-2 text-muted">{office.ubicación.provincia}</p>
                                             
                                             <p className="card-subtitle text-muted mt-5">
-                                                {office.servicios.slice(0, 4).map((servicio) => <span key={servicio}>{servicio} | </span>)}
-                                                { this.state.cantServices > 0 ? ( <span> + {this.state.cantServices}</span> ) : null }
+                                                {booked_from} – {booked_until}
                                             </p>
                                         </div>
 
-                                        <div className="col-sm-12 col-md-1 col-lg-1">
+                                        <div className="col col-1">
                                             <div className="vl"></div>
                                         </div>
 
-                                        <div className="col-sm-12 col-md-3 col-lg-3 text-center">
-                                            <div className="row mt-3">
-                                                <div className="col col-md-12">
-                                                    <button 
-                                                        type="button" 
-                                                        className="btn btn-link link-guardar text-reset"
-                                                        onClick={this.deleteFavorites}>
-                                                        Quitar <i className="material-icons align-middle ms-2 guardar">favorite</i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div className="row mt-3 mb-3"></div>
-                                            <div className="row mt-3">
-                                                <div className="col d-grid gap-2">
-                                                    <button 
-                                                        type="button" 
-                                                        className="btn btn-office4u btn-sm"
-                                                        disabled>
-                                                            Reservar
-                                                    </button>
-                                                </div>
+                                        <div className="col col-3 text-center align-self-center">
+                                            <p className="font-monospace">Total ${office.calendario_alquileres[0].monto}</p>
+                                            { office.calendario_alquileres[0].pendiente_pago ?
+                                                <span className="badge bg-dark mb-5">Pendiente de pago</span>
+                                            :
+                                                <span className="badge bg-light text-muted mb-5">Pago recibido</span>
+                                            }
+                                            <div className="col d-grid gap-2">
+                                                <button 
+                                                    type="button" 
+                                                    className="btn btn-office4u btn-sm"
+                                                    disabled>
+                                                        Cancelar
+                                                </button>
                                             </div>
                                         </div>
                                     </div>

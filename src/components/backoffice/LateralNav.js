@@ -23,6 +23,11 @@ class LateralNav extends Component {
             pathname: '/favoritos',
         })
     }
+    Bookings = () => {
+        this.props.history.push({
+            pathname: '/reservas',
+        })
+    }
     render() {
         return (
             <div>
@@ -77,8 +82,8 @@ class LateralNav extends Component {
                                 type="button" 
                                 className="list-group-item list-group-item-action bg-light item-menu btn-collapse"
                                 name="Rented"
-                                onClick={this.Rented}>
-                                <span className="ms-4">Alquilado</span>
+                                onClick={this.Bookings}>
+                                <span className="ms-4">Reservas</span>
                             </button>
                             <button 
                                 type="button" 

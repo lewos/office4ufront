@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 
 // MaterialUI
-// import 'date-fns';
-// import DateFnsUtils from '@date-io/date-fns';
-// import Grid from '@material-ui/core/Grid';
-// import {
-//     MuiPickersUtilsProvider,
-//     KeyboardDatePicker,
-// } from '@material-ui/pickers';
+import 'date-fns';
+import DateFnsUtils from '@date-io/date-fns';
+import Grid from '@material-ui/core/Grid';
+import {
+    MuiPickersUtilsProvider,
+    KeyboardDatePicker,
+} from '@material-ui/pickers';
 
 // MapBox
 import ReactMapGL from 'mapbox-gl';
@@ -22,6 +22,9 @@ import Footer from '../Footer'
 // Importo llamada a endpoint
 import {CreateFavourite as CreateFavouriteAPI} from "../../../controller/FavoritesController";
 import {GetFavorites as GetFavoritesAPI} from "../../../controller/FavoritesController";
+import {CheckOfficeAvailability as CheckOfficeAvailabilityAPI} from "../../../controller/ReservationsController";
+
+import FromModal from '../FormModal';
 
 ReactMapGL.accessToken = 'pk.eyJ1IjoibWFycXVlemp1YW4yMjExIiwiYSI6ImNrcGQ0b2gyeTE0aHEydXBlczV1MjB3dHEifQ.MmDsrFIX1HhKyAExXmPqjg'
 
@@ -37,52 +40,6 @@ function cambiarAFormatoAR(fecha){
     return diaFormateado;
   }
 
-// function MaterialUIPickers() {
-//     // The first commit of Material-UI
-//     const [selectedDateIN, setSelectedDateIN] = React.useState(new Date());
-//     const [selectedDateOUT, setSelectedDateOUT] = React.useState(new Date());
-  
-//     const handleDateChangeIN = (date) => {
-//       setSelectedDateIN(date);
-//     };
-
-//     const handleDateChangeOUT = (date) => {
-//         setSelectedDateOUT(date);
-//       };
-  
-//     return (
-//       <MuiPickersUtilsProvider utils={DateFnsUtils}>
-//         <Grid container justify="space-around">
-
-//           <KeyboardDatePicker
-//             margin="normal"
-//             id="date-picker-dialog"
-//             label="check-in"
-//             format="dd/MM/yyyy"
-//             value={selectedDateIN}
-//             onChange={handleDateChangeIN}
-//             KeyboardButtonProps={{
-//               'aria-label': 'change date',
-//             }}
-//           />
-
-//         <KeyboardDatePicker
-//             margin="normal"
-//             id="date-picker-dialog"
-//             label="check-out"
-//             format="dd/MM/yyyy"
-//             value={selectedDateOUT}
-//             onChange={handleDateChangeOUT}
-//             KeyboardButtonProps={{
-//               'aria-label': 'change date',
-//             }}
-//           />
-
-//         </Grid>
-//       </MuiPickersUtilsProvider>
-//     );
-//   }
-
 class Office extends Component {
     constructor(props) {
         super(props);
@@ -96,8 +53,13 @@ class Office extends Component {
             lat: this.props.location.state.lat,
             zoom: 10,
 
-            selectedDate: new Date(),
-            handleDateChange: ''
+            dateIN: new Date(),
+            dateOUT: new Date(),
+            btnAvailability: false,
+            available: false,
+            show_message: '',
+
+
         };
         this.mapContainer = React.createRef();
         this.goBack = this.goBack.bind(this);
@@ -113,6 +75,37 @@ class Office extends Component {
             center: [lng, lat],
             zoom: zoom
         });
+    }
+
+    handleDateChangeIN = (date) => {
+        this.setState({ dateIN: date })
+    }
+
+    handleDateChangeOUT = (date) => {
+        this.setState({ dateOUT: date })
+    }
+
+    // Validacion disponibilidad de la oficina.
+    checkAvailability = async (event) =>{
+        event.preventDefault();
+
+        let office_id = this.state.office.prop_id;
+        let date_in = this.state.dateIN.toISOString();
+        let date_out = this.state.dateOUT.toISOString();
+
+        this.setState({btnAvailability: true});
+
+        let checkOfficeAvailability = await CheckOfficeAvailabilityAPI(office_id, date_in, date_out);
+
+        if(checkOfficeAvailability.rdo === 0 ) {
+            if(checkOfficeAvailability.data === true ) {
+                this.setState({available: true, show_message: "available", btnAvailability: false});
+            } else {
+                this.setState({available: false, show_message: "unavailable", btnAvailability: false});
+            }
+        } else {
+            console.log("Error");
+        }
     }
 
     goBack(){
@@ -132,6 +125,27 @@ class Office extends Component {
         } else {
             this.createFavourite()
         }
+    }
+
+    reservation = () => {
+        if(!this.state.user_name) {
+            this.props.history.push({
+                pathname: '/login',
+                hash: '?searchView'
+            })
+        } else {
+            this.props.history.push({
+                pathname: '/reserva',
+                hash: '?searchView',
+                state: {
+                    office: this.state.office,
+                }
+            })
+        }
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+        });
     }
 
     createFavourite = async () => {
@@ -287,17 +301,14 @@ class Office extends Component {
                                     <div className="card-body ">
                                         <h5 className="card-title mt-3 mb-4">¿Te interesa esta oficina?</h5>
                                         <h6 className="card-subtitle mb-4 text-muted">Solicita una visita virtual</h6>
-                                        <button 
-                                            type="button" 
-                                            className="btn btn-dark">
-                                            Coordinar visita
-                                        </button>
+                                        <FromModal/>
 
                                         <h6 className="card-subtitle mt-5 mb-4 text-muted">¿Listo para dar el salto?</h6>
 
                                         <button 
                                             type="button" 
-                                            className="btn btn-outline-dark mb-3">
+                                            className="btn btn-outline-dark mb-3"
+                                            onClick={this.reservation}>
                                             Reservar ésta oficina ahora
                                         </button>
                                     </div>
@@ -308,13 +319,13 @@ class Office extends Component {
                         <div className="row mt-5 mb-5">
                             <h4 className="mb-4">Servicios</h4>
                                 {office.servicios.map((servicio) => 
-                                <div className="col col-sm-12 col-md-2 col-lg-2 mb-4">    
-                                    <div className="card border-light text-center height-services color-services">
-                                        <div className="card-body d-flex align-items-center justify-content-center">
-                                            <span>{servicio}</span>
+                                    <div key={servicio} className="col col-sm-12 col-md-2 col-lg-2 mb-4">    
+                                        <div className="card border-light text-center height-services color-services">
+                                            <div className="card-body d-flex align-items-center justify-content-center">
+                                                <span>{servicio}</span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
                                 )}
                         </div>
 
@@ -342,12 +353,66 @@ class Office extends Component {
                             <div className="col col-sm-12 col-md-7 col-lg-7 ">
                                 <div className="card text-center">
                                     <div className="card-body ">
-                                        {/* <MaterialUIPickers/> */}
+                                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                            <Grid container justify="space-around">
+
+                                                <KeyboardDatePicker
+                                                    margin="normal"
+                                                    id="date-picker-IN"
+                                                    label="check-in"
+                                                    format="dd/MM/yyyy"
+                                                    value={this.state.dateIN}
+                                                    onChange={this.handleDateChangeIN}
+                                                    KeyboardButtonProps={{
+                                                    'aria-label': 'change date',
+                                                    }}
+                                                />
+
+                                                <KeyboardDatePicker
+                                                    margin="normal"
+                                                    id="date-picker-OUT"
+                                                    label="check-out"
+                                                    format="dd/MM/yyyy"
+                                                    value={this.state.dateOUT}
+                                                    onChange={this.handleDateChangeOUT}
+                                                    KeyboardButtonProps={{
+                                                    'aria-label': 'change date',
+                                                    }}
+                                                />
+
+                                            </Grid>
+                                        </MuiPickersUtilsProvider>
                                     </div>
                                     <div className="card-footer d-grid gap-2">
-                                        <button type="button" className="btn btn-dark">Consultar</button>
+                                        { !this.state.btnAvailability ?
+                                            <button 
+                                                type="button" 
+                                                className="btn btn-dark"
+                                                onClick={this.checkAvailability}>
+                                                    Consultar
+                                            </button>
+                                            : 
+                                            <button 
+                                                type="button" 
+                                                className="btn btn-dark"
+                                                disabled>
+                                                    Consultar
+                                            </button>
+                                        }
                                     </div>
                                 </div>
+                                { this.state.available ? 
+                                    this.state.show_message==="available" ? 
+                                        <div className="alert alert-success mt-2 text-center" role="alert">
+                                            La oficina está libre. Es tu oportunidad, reservá ahora!
+                                        </div>
+                                    : null
+                                : this.state.show_message==="unavailable" ?
+                                        <div className="alert alert-secondary mt-2 text-center" role="alert">
+                                            Parece que la oficina no está disponible. Proba con otras fechas.
+                                        </div>
+                                    : null
+                                }
                             </div>
                         </div>
 

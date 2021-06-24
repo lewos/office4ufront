@@ -38,6 +38,12 @@ class Nav extends Component {
         })
     }
 
+    Favorite = () => {
+        this.props.history.push({
+            pathname: '/favoritos',
+        })
+    }
+
     Backoffice = () => {
         this.props.history.push({
             pathname: '/inicio',
@@ -92,7 +98,7 @@ class Nav extends Component {
                                 <button
                                     type="button"
                                     className="btn btn-primary cabecera-btn"
-                                    onClick={this.Backoffice}>
+                                    onClick={this.Favorite}>
                                     <span className="me-2">Guardado</span>
                                     <i className="material-icons align-middle">favorite_border</i>
                                 </button>

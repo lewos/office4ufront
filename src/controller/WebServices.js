@@ -17,7 +17,12 @@ const urlWebServices = {
     createFavourite: URL_API + "/api/Favourites",
     getFavorites: URL_API + "/api/Favourites/GetFavouritesOfficesById",
     deleteFavourite: URL_API + "/api/Favourites",
-    
+
+    // Reservations
+    checkOfficeAvailability: URL_API + "/api/Bookings/CheckOfficeAvailability",
+    newReservation: URL_API + "/api/Bookings",
+    getReservationByTenant: URL_API + "/api/Bookings/GetBookedOfficesByTenant",
+
 }
 
 export default urlWebServices;

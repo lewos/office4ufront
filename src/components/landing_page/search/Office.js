@@ -106,7 +106,7 @@ class Office extends Component {
 
     render() {
         const office = this.state.office;
-        console.log(this.state.favorite)
+        //console.log(this.state.favorite)
         if(this.state.loading){
             return (
                 <div className="card mt-4 card-height align-items-center justify-content-center" >
